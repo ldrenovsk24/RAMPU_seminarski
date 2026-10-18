@@ -9,6 +9,7 @@ import SwiftUI
 
 struct PozdravView: View{
     let ime: String
+    @Binding var put: [Ekran]
     @State private var brojac = 0
     
     var body: some View{
@@ -22,6 +23,11 @@ struct PozdravView: View{
                 brojac += 1
             }
             .buttonStyle(.bordered)
+            
+            Button("Prikaži dnenvik"){
+                put.append(.dnevnik)
+            }
+            .buttonStyle(.borderedProminent)
         }
         .padding()
         .navigationTitle("Pozdrav")
@@ -29,5 +35,5 @@ struct PozdravView: View{
 }
 
 #Preview{
-    NavigationStack{PozdravView(ime: "Leo")}
+    NavigationStack{PozdravView(ime: "Leo", put: .constant([]))}
 }

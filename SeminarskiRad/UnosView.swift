@@ -7,9 +7,14 @@
 
 import SwiftUI
 
+enum Ekran: Hashable{
+    case pozdrav(String)
+    case dnevnik
+}
+
 struct UnosView: View {
     @State private var ime = ""
-    @State private var put: [String] = [] // stog zaslona
+    @State private var put: [Ekran] = [] // stog zaslona
     
     var body: some View {
         NavigationStack(path: $put){
@@ -22,7 +27,7 @@ struct UnosView: View {
                 
                 
                 Button("Dalje"){
-                    put.append(ime)
+                    put.append(.pozdrav(ime))
                 }
                 .buttonStyle(.borderedProminent)
                 .disabled(ime.isEmpty)
@@ -30,8 +35,13 @@ struct UnosView: View {
             
             .padding()
             .navigationTitle("Unos")
-            .navigationDestination(for: String.self){ime in
-                PozdravView(ime: ime)
+            .navigationDestination(for: Ekran.self){ ekran in
+                switch ekran{
+                case .pozdrav(let ime):
+                    PozdravView(ime: ime, put: $put)
+                case .dnevnik:
+                    DnevnikView(put: $put)
+                }
             }
         }
     }
