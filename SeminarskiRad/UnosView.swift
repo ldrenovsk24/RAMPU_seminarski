@@ -8,38 +8,32 @@
 import SwiftUI
 
 struct UnosView: View {
-    @SceneStorage("ime") private var ime = ""
-    @SceneStorage("brojac") private var brojac = 0
+    @State private var ime = ""
+    @State private var put: [String] = [] // stog zaslona
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Ime:")
-            TextField("Upiši ime: ", text: $ime)
-                .textFieldStyle(.roundedBorder)
-                .submitLabel(.next)
-                .onSubmit {
-                    //kod
-                }
+        NavigationStack(path: $put){
+            VStack {
                 
-            Button("Dalje"){
-                if(ime.isEmpty){
-                    brojac += 1
+                Text("Kako se zovete?")
+                    .font(.title2)
+                TextField("Upiši ime: ", text: $ime)
+                    .textFieldStyle(.roundedBorder)
+                
+                
+                Button("Dalje"){
+                    put.append(ime)
                 }
-            }
-            .buttonStyle(.borderedProminent)
-            if(brojac != 0){
-                Text("Broj neuspjelih pritisaka: \(brojac)")
+                .buttonStyle(.borderedProminent)
+                .disabled(ime.isEmpty)
             }
             
+            .padding()
+            .navigationTitle("Unos")
+            .navigationDestination(for: String.self){ime in
+                PozdravView(ime: ime)
+            }
         }
-        .padding()
-        .navigationTitle("Unos")
-        .navigationDestination(for: String.self){ime in
-            PozdravView(ime: ime)
-        }
-            
     }
 }
 
