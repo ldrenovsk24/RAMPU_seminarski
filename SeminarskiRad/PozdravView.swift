@@ -12,6 +12,8 @@ struct PozdravView: View{
     @Binding var put: [Ekran]
     @State private var brojac = 0
     
+    @Environment(Dnevnik.self) private var dnevnik
+    
     var body: some View{
         VStack(spacing: 24){
             Text("Pozdrav, \(ime)!")
@@ -31,9 +33,12 @@ struct PozdravView: View{
         }
         .padding()
         .navigationTitle("Pozdrav")
+        .onAppear{dnevnik.zabiljezi("PozdravView: onAppear")}
+        .onDisappear{dnevnik.zabiljezi("PozdravView: onDisappear")}
     }
 }
 
 #Preview{
     NavigationStack{PozdravView(ime: "Leo", put: .constant([]))}
+        .environment(Dnevnik.shared)
 }

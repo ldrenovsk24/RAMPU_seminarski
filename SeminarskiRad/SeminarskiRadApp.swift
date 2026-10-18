@@ -9,9 +9,12 @@ import SwiftUI
 
 @main
 struct SeminarskiRadApp: App {
+    @State private var dnevnik = Dnevnik.shared
+    
     var body: some Scene {
         WindowGroup {
             UnosView()
+                .environment(dnevnik)
         }
     }
 }

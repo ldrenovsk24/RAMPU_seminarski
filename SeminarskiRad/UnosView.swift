@@ -16,6 +16,7 @@ struct UnosView: View {
     @State private var ime = ""
     @State private var put: [Ekran] = [] // stog zaslona
     
+    @Environment(Dnevnik.self) private var dnevnik
     var body: some View {
         NavigationStack(path: $put){
             VStack {
@@ -35,6 +36,8 @@ struct UnosView: View {
             
             .padding()
             .navigationTitle("Unos")
+            .onAppear{dnevnik.zabiljezi("UnosView: onAppear")}
+            .onDisappear{dnevnik.zabiljezi("UnosView: onDisappear")}
             .navigationDestination(for: Ekran.self){ ekran in
                 switch ekran{
                 case .pozdrav(let ime):
@@ -50,5 +53,5 @@ struct UnosView: View {
 
 
 #Preview {
-    UnosView()
+    UnosView().environment(Dnevnik.shared)
 }
