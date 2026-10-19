@@ -25,4 +25,7 @@ final class Dnevnik{
         zapisi.append(Zapis(poruka: poruka))
         print(poruka)
     }
+    func obrisi(){
+        zapisi.removeAll()
+    }
 }

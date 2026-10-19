@@ -22,9 +22,18 @@ struct DnevnikView: View{
         }
         .navigationTitle("Dnevnik")
         .toolbar{
-            Button("Na početak"){ put.removeAll()}
+            ToolbarItem(placement: .topBarLeading){
+                Button("Obrisi", role: .destructive){
+                    dnevnik.obrisi()
+                }
+            }
+            ToolbarItem(placement: .topBarTrailing){
+                Button("Na početak"){ put.removeAll()
+                }
+            }
         }
         .onAppear{dnevnik.zabiljezi("DnevnikView: onAppear")}
-        onDisappear{dnevnik.zabiljezi("DnevnikView: onDisappear")}
+        .onDisappear{dnevnik.zabiljezi("DnevnikView: onDisappear")
+        }
     }
 }

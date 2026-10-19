@@ -13,7 +13,7 @@ enum Ekran: Hashable{
 }
 
 struct UnosView: View {
-    @State private var ime = ""
+    @SceneStorage("ime") private var ime = ""
     @State private var put: [Ekran] = [] // stog zaslona
     
     @Environment(Dnevnik.self) private var dnevnik
